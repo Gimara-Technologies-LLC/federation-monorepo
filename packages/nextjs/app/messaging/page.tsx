@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-const { ethers } = require('ethers');
-import { Client } from '@xmtp/xmtp-js';
-import {Subscribe} from "./Subscribe"
+import React, { useEffect, useState } from "react";
+import { Subscribe } from "./Subscribe";
+import { Client } from "@xmtp/xmtp-js";
+
+const { ethers } = require("ethers");
 
 // Replace with your Ethereum private key
-const PRIVATE_KEY = 'your-private-key-here';
+const PRIVATE_KEY = "your-private-key-here";
 
 const Messaging: NextPage = () => {
   // const [address, setAddress] = useState('');
@@ -89,17 +90,16 @@ const Messaging: NextPage = () => {
 
   return (
     <div style={styles.homePageWrapper}>
-
       <Subscribe
         senderAddress="0x5740c82452fbaAb766cFf7A645A085D586C2326D"
         onSubscribe={(address, state) => {
           console.log("New subscriber: ", { address, state });
-          setSubscribeArray((prevArray) => [...prevArray, { address, state }]);
+          setSubscribeArray(prevArray => [...prevArray, { address, state }]);
         }}
         onUnsubscribe={(address, state) => {
           console.log("Unsubscribed: ", { address, state });
-          setSubscribeArray((prevArray) => {
-            const index = prevArray.findIndex((a) => a.address === address);
+          setSubscribeArray(prevArray => {
+            const index = prevArray.findIndex(a => a.address === address);
             if (index !== -1) {
               const newArray = [...prevArray];
               newArray[index].state = state;
@@ -108,7 +108,7 @@ const Messaging: NextPage = () => {
             return prevArray;
           });
         }}
-        onError={(error) => console.log("Error subscribing: " + error)}
+        onError={error => console.log("Error subscribing: " + error)}
         env="production"
       />
     </div>

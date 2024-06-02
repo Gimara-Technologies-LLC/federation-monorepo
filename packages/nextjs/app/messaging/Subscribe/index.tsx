@@ -20,7 +20,6 @@ export function Subscribe({
   const [consentLog, setConsentLog] = useState("");
   // State for sender address
 
-
   const connectWallet = async () => {
     if (typeof window.ethereum !== "undefined") {
       try {
@@ -41,8 +40,8 @@ export function Subscribe({
       // Set loading to true
       setLoading(true);
       // Get the subscriber
-      let wallet = await connectWallet();
-      let client = await Client.create(wallet, { env: env });
+      const wallet = await connectWallet();
+      const client = await Client.create(wallet, { env: env });
 
       // Refresh the consent list to make sure your application is up-to-date with the
       await client.contacts.refreshConsentList();
@@ -54,14 +53,12 @@ export function Subscribe({
       if (state === "unknown" || state === "denied") {
         state = "allowed";
         await client.contacts.allow([senderAddress]);
-        if (typeof onSubscribe === "function")
-          onSubscribe(client.address, state);
+        if (typeof onSubscribe === "function") onSubscribe(client.address, state);
       } else if (state === "allowed") {
         state = "denied";
         await client.contacts.deny([senderAddress]);
         // If the state is allowed, block the subscriber
-        if (typeof onUnsubscribe === "function")
-          onUnsubscribe(client.address, state);
+        if (typeof onUnsubscribe === "function") onUnsubscribe(client.address, state);
       }
 
       //Print the whole list
@@ -83,16 +80,17 @@ export function Subscribe({
 
   return (
     <>
-      <div className={`Subscribe ${loading ? "loading" : ""} flex relative flex-col rounded-md text-center items-center`}>
+      <div
+        className={`Subscribe ${loading ? "loading" : ""} flex relative flex-col rounded-md text-center items-center`}
+      >
         <small>Sender address: {senderAddress}</small>
-        <button className=
-        "inline-flex items-center justify-center rounded-md mb-1.5 text-left cursor-pointer	 border-none text-xs px-2.5	py-5	font-bold bg-[#ededed] text-[#333333]"
-         onClick={handleClick}
+        <button
+          className="inline-flex items-center justify-center rounded-md mb-1.5 text-left cursor-pointer	 border-none text-xs px-2.5	py-5	font-bold bg-[#ededed] text-[#333333]"
+          onClick={handleClick}
         >
-          {loading ? "Loading...": subscriptionStatus}
+          {loading ? "Loading..." : subscriptionStatus}
         </button>
       </div>
-
     </>
   );
 }

@@ -5,19 +5,19 @@ pragma solidity >= 0.7.0 < 0.9.0;
 import {CCIPReceiver} from "@chainlink/contracts-ccip/src/v0.8/ccip/applications/CCIPReceiver.sol";
 // Import Client Library which provides structures to interact with the CCIP,
 import {Client} from "@chainlink/contracts-ccip/src/v0.8/ccip/libraries/Client.sol";
-// Import the custom NFT contract
+// Import the custom ABT contract
 import {ABT} from "./ABT.sol";
 
 contract DestinationMinter is CCIPReceiver {
 
-    // DEclaring an instance of the ABT contract
-    ABT abt;
+    // Declaring an instance of the ABT contract
+    ABT public abt;
 
     // Event emitted when the mint call is successful
     event MintCallSuccessfull();
 
     // The constructor initializes the contract with the router's address and the ABT contract's address
-    constructor(address router, address nftAddress) CCIPReceiver(router) {
+    constructor(address router, address abtAddress) CCIPReceiver(router) {
         // Assign the ABT instance
         abt = ABT(abtAddress);
     }
@@ -33,7 +33,4 @@ contract DestinationMinter is CCIPReceiver {
         emit MintCallSuccessfull();
     }
 
-    function updateAbt(address abtAddress) external {
-        abt = ABT(nftAddress);
-    }
 }
