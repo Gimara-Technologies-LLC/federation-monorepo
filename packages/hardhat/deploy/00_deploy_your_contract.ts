@@ -1,6 +1,9 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { Contract } from "ethers";
+import {ABT} from "../typechain-types/contracts/ABT";
+import {DestinationMinter} from "../typechain-types/contracts/DestinationMinter";
+import {SourceMinter} from "../typechain-types/contracts/SourceMinter";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -35,6 +38,11 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   // Get the deployed contract to interact with it after deploying.
   const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
   console.log("👋 Initial greeting:", await yourContract.greeting());
+
+  await deploy("ABT", {
+    from: deployer,
+    args: []
+  })
 };
 
 export default deployYourContract;

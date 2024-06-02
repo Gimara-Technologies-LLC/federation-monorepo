@@ -9,6 +9,8 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import '@nomicfoundation/hardhat-toolbox';
+import './tasks';
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -50,8 +52,8 @@ const config: HardhatUserConfig = {
       url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],
     },
-    sepolia: {
-      url: `https://eth-sepolia.g.alchemy.com/v2/${providerApiKey}`,
+    ethereumSepolia: {
+      url: `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_ETH_SEPOLIA}`,
       accounts: [deployerPrivateKey],
     },
     arbitrum: {
@@ -59,7 +61,7 @@ const config: HardhatUserConfig = {
       accounts: [deployerPrivateKey],
     },
     arbitrumSepolia: {
-      url: `https://arb-sepolia.g.alchemy.com/v2/${providerApiKey}`,
+      url: `https://arb-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_ARBITRUM_SEP}`,
       accounts: [deployerPrivateKey],
     },
     optimism: {
@@ -118,6 +120,10 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.publicgoods.network",
       accounts: [deployerPrivateKey],
     },
+    avalancheFuji: {
+      url: process.env.AVALANCHE_FUJI_RPC_URL,
+      accounts: [deployerPrivateKey]
+    }
   },
   // configuration for harhdat-verify plugin
   etherscan: {
