@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment, TaskArguments } from "hardhat/types";
 import { getPrivateKey, getProviderRpcUrl, getRouterConfig } from "./utils";
-import { Wallet, providers } from "ethers";
+import { Wallet } from "ethers";
 import { DestinationMinter, DestinationMinter__factory, ABT, ABT__factory } from "../typechain-types";
 import { Spinner } from "../utils/spinner";
 const {ethers} = require('ethers');
